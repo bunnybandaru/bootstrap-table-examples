@@ -1,0 +1,58 @@
+<script>
+init({
+  title: 'Group By v2',
+  desc: 'Use Plugin: bootstrap-table-group-by-v2.',
+  links: [
+    'extensions/group-by-v2/bootstrap-table-group-by.css',
+    'bootstrap-table.min.css'
+  ],
+  scripts: [
+    'bootstrap-table.min.js',
+    'extensions/group-by-v2/bootstrap-table-group-by.min.js'
+  ]
+})
+</script>
+
+<template>
+  <table id="table"></table>
+</template>
+
+<script>
+  function mounted () {
+    $('#table').bootstrapTable({
+      url: 'json/data6.json',
+      search: true,
+      groupBy: true,
+      groupByField: 'shape',
+      groupByToggle: true,
+      groupByFormatter: value => {
+        const strong = document.createElement('strong')
+
+        strong.className = 'text-primary'
+        strong.textContent = `GROUP: ${value}`
+        return strong.outerHTML
+      },
+      columns: [
+        {
+          field: 'state',
+          checkbox: true
+        },
+        {
+          field: 'shape',
+          title: 'Shape',
+          sortable: true
+        },
+        {
+          field: 'color',
+          title: 'Color',
+          sortable: true
+        },
+        {
+          field: 'area',
+          title: 'Area',
+          sortable: true
+        }
+      ]
+    })
+  }
+</script>

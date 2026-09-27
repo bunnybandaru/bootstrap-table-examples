@@ -1,0 +1,59 @@
+<script>
+init({
+  title: 'Row Attributes',
+  desc: 'Use `rowAttributes` option to set the row attributes. You can hover the table row to view the example.',
+  links: ['bootstrap-table.min.css'],
+  scripts: ['bootstrap-table.min.js']
+})
+</script>
+
+<template>
+  <table
+    id="table"
+    data-toggle="table"
+    data-height="460"
+    data-url="json/data1.json"
+    data-row-attributes="rowAttributes"
+    data-pagination="true"
+  >
+    <thead>
+      <tr>
+        <th data-field="id">
+          ID
+        </th>
+        <th data-field="name">
+          Item Name
+        </th>
+        <th data-field="price">
+          Item Price
+        </th>
+      </tr>
+    </thead>
+  </table>
+</template>
+
+<script>
+  window.rowAttributes = (row, index) => ({
+    'data-bs-toggle': 'popover',
+    'data-bs-placement': 'bottom',
+    'data-bs-trigger': 'hover focus',
+    'data-bs-html': 'true',
+    'data-bs-title': `Row ${index}`,
+    'data-bs-content': [
+      `Index: ${index}`,
+      `ID: ${row.id}`,
+      `Name: ${row.name}`,
+      `Price: ${row.price}`
+    ].join('<br>')
+  })
+
+  function mounted () {
+    $('#table').on('post-body.bs.table', () => {
+      const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+
+      popoverTriggerList.forEach(function (popoverTriggerEl) {
+        new bootstrap.Popover(popoverTriggerEl)
+      })
+    })
+  }
+</script>
